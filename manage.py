@@ -1,5 +1,5 @@
 from app import create_app
-from flask import Server,Manager
+from flask_script import Server,Manager
 
 app = create_app('development')
 @manager.Command
