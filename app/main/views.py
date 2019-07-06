@@ -94,4 +94,18 @@ def user_blogs(uname):
 def blogs():
     blogs = Blog.query.order_by(Blog.id.desc()).limit(5)
     return render_template('blogs.html',blogs = blogs)
+@main.route('/subscribe', methods=['GET','POST'])
+def subscriber():
+    subscriber_form=SubscriberForm()
+    blogs = Blog.query.order_by(Blog.posted.desc()).all()
+    if subscriber_form.validate_on_submit():
+        subscriber= Subscriber(email=subscriber_form.email.data,name = subscriber_form.name.data)
+        db.session.add(subscriber)
+        db.session.commit()
+        mail_message("Welcome to My One Time Blog","email/welcome_subscriber",subscriber.email,subscriber=subscriber)
+        title= "My One Time Blog"
+        return render_template('index.html',title=title, blogs=blogs)
+    subscriber = Blog.query.all()
+    blogs = Blog.query.all()
+    return render_template('subscribe.html',subscriber=subscriber,subscriber_form=subscriber_form,blog=blog)
 
