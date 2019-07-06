@@ -30,4 +30,9 @@ class Comment(db.model):
     name = db.Column(db.String)
     blog = db.Column(db.Integer,db.ForeignKey('blogs'))
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
+class Subscriber(db.Model):
+    __tablename__ = 'subscribers'
+    id = db.Column(db.Integer,primary_key = True)
+    name = db.Colum(db.String(20))
+    email = db.Column(db.String(),unique = True)
     
