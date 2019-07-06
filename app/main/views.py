@@ -66,3 +66,10 @@ def delete_blog(id):
     db.session.delete(blog)
     db.session.commit()
     return render_template('blogs.html', id=id, blog = blog)
+@main.route('/blog/comment/delete/<int:id>', methods = ['GET', 'POST'])
+@login_required
+def delete_comment(id):
+    comment = Comment.query.filter_by(id=id).first()
+    blog_id = comment.blog
+    Comment.delete_comment(id)
+    return redirect(url_for('main.blog',id=blog_id))
