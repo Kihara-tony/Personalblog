@@ -73,3 +73,15 @@ def delete_comment(id):
     blog_id = comment.blog
     Comment.delete_comment(id)
     return redirect(url_for('main.blog',id=blog_id))
+@main.route('/blog/<int:id>', methods = ["GET","POST"])
+def blog(id):
+    blog = Blog.get_blog(id)
+    posted_date = blog.posted.strftime('%b %d, %Y')
+    form = CommentForm()
+    if form.validate_on_submit():
+        comment = form.text.data
+        name = form.name.data
+        new_comment = Comment(comment = comment, name = name, blog_id = blog)
+        new_comment.save_comment()
+    comments = Comment.get_comments(blog)
+    return render_template('blog.html', blog = blog, comment_form = form,comments = comments, date = posted_date)
