@@ -85,3 +85,13 @@ def blog(id):
         new_comment.save_comment()
     comments = Comment.get_comments(blog)
     return render_template('blog.html', blog = blog, comment_form = form,comments = comments, date = posted_date)
+@main.route('/user/<uname>/blogs', methods = ['GET','POST'])
+def user_blogs(uname):
+    user = User.query.filter_by(username = uname).first()
+    blogs = Blog.query.filter_by(user_id = user.id).all()
+    return render_template('profile/blogs.html', user = user, blogs = blogs)
+@main.route('/blogs/recent', methods = ['GET','POST'])
+def blogs():
+    blogs = Blog.query.order_by(Blog.id.desc()).limit(5)
+    return render_template('blogs.html',blogs = blogs)
+
