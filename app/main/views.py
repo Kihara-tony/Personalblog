@@ -108,4 +108,19 @@ def subscriber():
     subscriber = Blog.query.all()
     blogs = Blog.query.all()
     return render_template('subscribe.html',subscriber=subscriber,subscriber_form=subscriber_form,blog=blog)
+@main.route('/blog/<int:id>/update', methods = ['GET','POST'])
+@login_required
+def update_blog(id):
+    legend = 'Update Blog'
+    blog = Blog.get_blog(id)
+    form = BlogForm()
+    if form.validate_on_submit():
+        blog.blog_title = form.title.data
+        blog.blog_content = form.text.data
+        db.session.commit()
+        return redirect(url_for('main.blog', id = id))
+    elif request.method == 'GET':
+        form.title.data = blog.blog_title
+        form.text.data = blog.blog_content
+    return render_template('new_blog.html', legend = legend, blog_form = form, id=id)
 
