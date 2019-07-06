@@ -43,3 +43,26 @@ def update_pic(uname):
         db.session.commit()
     return redirect(url_for('main.profile', uname = uname))
 
+@main.route('/blog/new', methods = ['GET','POST'])
+@login_required
+def new_blog():
+    legend = 'New Blog'
+    form = BlogForm()
+    if form.validate_on_submit():
+        title = form.title.data
+        blog = form.text.data
+        new_blog = Blog(blog_title = title,blog_content = blog,user = current_user)
+        new_blog.save_blog()
+        subscriber = Subscriber.query.all()
+        for email in subscriber:
+            mail_message("New Blog Post from My One Time Blog! ","email/postnotification",email.email,subscriber=subscriber)
+        return redirect(url_for('main.index'))
+    title = 'New Blog'
+    return render_template('new_blog.html', legend = legend, title = title, blog_form = form)
+@main.route('/blog/delete/<int:id>', methods = ['GET', 'POST'])
+@login_required
+def delete_blog(id):
+    blog = Blog.get_blog(id)
+    db.session.delete(blog)
+    db.session.commit()
+    return render_template('blogs.html', id=id, blog = blog)
