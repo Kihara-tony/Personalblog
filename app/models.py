@@ -23,4 +23,11 @@ class Blog(db.model):
     posted = db.Column(db.DateTime,default = datetime.utcnow)
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
     comments = db.relationship('Comment',backref = 'blog_id',lazy = 'dynamic')
+class Comment(db.model):
+    __tablename__ = 'comments'
+    id = db.Column(db.Integer,primary_key = True)
+    comment = db.column(db.String(1000))
+    name = db.Column(db.String)
+    blog = db.Column(db.Integer,db.ForeignKey('blogs'))
+    user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
     
