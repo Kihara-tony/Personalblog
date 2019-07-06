@@ -7,6 +7,7 @@ from flask_login import login_required,current_user
 import datetime
 from ..email import mail_message
 
+   # main home page
 @main.route('/')
 def index():
     '''
@@ -14,12 +15,16 @@ def index():
     '''
     title = 'Home - Welcome to My One Time Blog'
     return render_template('index.html',title = title)
+
+#   user profile function
 @main.route('/user/<uname>')
 def profile(uname):
     user = User.query.filter_by(username = uname).first()
     if user is None:
         abort(404)
     return render_template('profile/profile.html',user = user)
+
+# function for updating the users profile
 @main.route('/user/<uname>/update',methods = ['GET','POST'])
 @login_required
 def update_profile(uname):
@@ -33,6 +38,8 @@ def update_profile(uname):
         db.session.commit()
         return redirect(url_for('.profile',uname = user.username))
     return render_template('profile/update.html',form = form)
+
+# function for updating the users profile picture
 @main.route('/user/<uname>/update/pic', methods = ['POST'])
 def update_pic(uname):
     user = User.query.filter_by(username = uname).first()
@@ -43,6 +50,7 @@ def update_pic(uname):
         db.session.commit()
     return redirect(url_for('main.profile', uname = uname))
 
+# function for adding a new blog
 @main.route('/blog/new', methods = ['GET','POST'])
 @login_required
 def new_blog():
@@ -59,6 +67,8 @@ def new_blog():
         return redirect(url_for('main.index'))
     title = 'New Blog'
     return render_template('new_blog.html', legend = legend, title = title, blog_form = form)
+
+# function for deleting a blog that is no longer up to date or not wanted
 @main.route('/blog/delete/<int:id>', methods = ['GET', 'POST'])
 @login_required
 def delete_blog(id):
@@ -66,6 +76,8 @@ def delete_blog(id):
     db.session.delete(blog)
     db.session.commit()
     return render_template('blogs.html', id=id, blog = blog)
+
+# function to delete a comment
 @main.route('/blog/comment/delete/<int:id>', methods = ['GET', 'POST'])
 @login_required
 def delete_comment(id):
@@ -73,6 +85,8 @@ def delete_comment(id):
     blog_id = comment.blog
     Comment.delete_comment(id)
     return redirect(url_for('main.blog',id=blog_id))
+
+# function to save the comments of a blog
 @main.route('/blog/<int:id>', methods = ["GET","POST"])
 def blog(id):
     blog = Blog.get_blog(id)
@@ -85,6 +99,8 @@ def blog(id):
         new_comment.save_comment()
     comments = Comment.get_comments(blog)
     return render_template('blog.html', blog = blog, comment_form = form,comments = comments, date = posted_date)
+
+# function for helping the user see his blogs
 @main.route('/user/<uname>/blogs', methods = ['GET','POST'])
 def user_blogs(uname):
     user = User.query.filter_by(username = uname).first()
@@ -94,6 +110,8 @@ def user_blogs(uname):
 def blogs():
     blogs = Blog.query.order_by(Blog.id.desc()).limit(5)
     return render_template('blogs.html',blogs = blogs)
+
+# function for subscribing in the daily update of a new blog
 @main.route('/subscribe', methods=['GET','POST'])
 def subscriber():
     subscriber_form=SubscriberForm()
@@ -108,6 +126,8 @@ def subscriber():
     subscriber = Blog.query.all()
     blogs = Blog.query.all()
     return render_template('subscribe.html',subscriber=subscriber,subscriber_form=subscriber_form,blog=blog)
+
+# function to update the blog
 @main.route('/blog/<int:id>/update', methods = ['GET','POST'])
 @login_required
 def update_blog(id):
