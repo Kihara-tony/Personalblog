@@ -13,3 +13,7 @@ class CommentForm(FlaskForm):
     name = StringField('Your name',validators = [Required(),length(min = 3, max =20)])
     text = TextAreaField('Leave a comment please thank you',validators = [Required()])
     submit = SubmitField('Comment')
+class SubscribeForm(FlaskForm):
+    name = StringField('Enter your name',validators = [Required()])
+    email = StringField('Enter your email',validators =[Required(),Email()])
+    submit = SubmitField('Subscribe')
