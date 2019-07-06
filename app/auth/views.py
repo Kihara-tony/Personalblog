@@ -22,3 +22,16 @@ def login():
             login_user(user,form.remember.data)
             return redirect(request.args.get('next') or url_for('main.index'))
         flash('Invalid Author or Password')
+    title = 'My One Time Blog Login'
+    return render_template('auth/login.html',title = title,login_form = form)
+
+@auth.route('/register',methods = ['GET','POST'])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(username = form.username.data,email = form.email.data,password = form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        mail_message('Welcome to My One Time Blog App','email\welcome_user',user.email,user = user)
+        return redirect(url_for('auth.login'))
+    return render_template('auth/register.html',registration_form = form)
