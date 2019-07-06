@@ -9,3 +9,7 @@ class BlogForm(FlaskForm):
 class UpdateProfile(FlaskForm):
     bio = TextField('Update Bio',validators = [Required()])
     submit = SubmitField('Submit')
+class CommentForm(FlaskForm):
+    name = StringField('Your name',validators = [Required(),length(min = 3, max =20)])
+    text = TextAreaField('Leave a comment please thank you',validators = [Required()])
+    submit = SubmitField('Comment')
