@@ -1,4 +1,5 @@
 from . import db
+from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import UserMixin
 from . import login_manager 
 from datetime import datetime
@@ -14,3 +15,12 @@ class User(UserMixin,db.model):
     password_secure = db.Column(db.String(255))
     blogs = db.relationship('Blog',backref = 'user',lazy = 'dynamic')
     comments = db.relationship('Comment',backref = 'user',lazy = 'dynamic')
+class Blog(db.model):
+    __tablename__ = 'blogs'
+    id = db.Column(db.Integer,primary_key = True)
+    blog_title = db.column(db.String)
+    blog_content = db.Column(db.String(1000))
+    posted = db.Column(db.DateTime,default = datetime.utcnow)
+    user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
+    comments = db.relationship('Comment',backref = 'blog_id',lazy = 'dynamic')
+    
