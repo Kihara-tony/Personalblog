@@ -6,24 +6,24 @@ from .forms import LoginForm,RegistrationForm
 from .. import db  
 from ..email import mail_message
 
-user = [
-    {
-        'email':'tonykiharatonkin6@gmail.com'
-        'password':'tonyqtjds2'
-    }
-]
+# user = [
+#     {
+#         'email':'tonykiharatonkin6@gmail.com'
+#         'password':'tonyqtjds2'
+#     }
+# ]
 
 @auth.route('/login',methods = ['GET','POST'])
 def login():
-    form = LoginForm()
-    if form.validate_on_submit():
+    login_form = LoginForm()
+    if login_form.validate_on_submit():
         user = User.query.filter_by(email = form.email.data).first()
-        if form.email.data == 'tonykiharatonkin6@gmail.com' and form.password.data == 'tonyqtjds2':
+        if login_form.email.data == 'tonykiharatonkin6@gmail.com' and login_form.password.data == 'tonyqtjds2':
             login_user(user,form.remember.data)
             return redirect(request.args.get('next') or url_for('main.index'))
         flash('Invalid Author or Password')
     title = 'My One Time Blog Login'
-    return render_template('auth/login.html',title = title,login_form = form)
+    return render_template('auth/login.html',title = title,login_form = login_form)
 @auth.route('/logout')
 def logout():
     logout_user()

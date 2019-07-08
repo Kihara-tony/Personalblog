@@ -3,7 +3,7 @@ import os
 class Config:
     '''
     General configuration parent class
-    '''
+    '''# Creating the app configurations
     SECRET_KEY = os.environ.get('SECRET_KEY')
     SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://tony:tonyqtjds2@localhost/myblog'
     UPLOADED_PHOTOS_DEST = 'app/static/photos'
@@ -32,6 +32,7 @@ class DevConfig(Config):
     '''
     SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://tony:tonyqtjds2@localhost/myblog'
     DEBUG = True
+    ENV = 'development'
 config_options = {
     'development':DevConfig,
     'production':ProdConfig,

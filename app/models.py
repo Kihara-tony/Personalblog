@@ -6,10 +6,11 @@ from datetime import datetime
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id)
+    return User.query.get(int(user_id))
 
-class User(UserMixin,db.model):
+class User(UserMixin,db.Model):
     __tablename__ = 'users'
+    
     id = db.Column(db.Integer,primary_key = True)
     username = db.Column(db.String(20),index = True)
     email = db.Column(db.String(255),unique = True, index = True)
@@ -40,7 +41,7 @@ class Role(db.Model):
     def __repr__(self):
         return f'User {self.name}'
 
-class Blog(db.model):
+class Blog(db.Model):
     __tablename__ = 'blogs'
     id = db.Column(db.Integer,primary_key = True)
     blog_title = db.column(db.String)
@@ -59,7 +60,7 @@ class Blog(db.model):
     def __repr__(self):
         return f'Blog {self.blog_title}'
         
-class Comment(db.model):
+class Comment(db.Model):
     __tablename__ = 'comments'
     id = db.Column(db.Integer,primary_key = True)
     comment = db.column(db.String(1000))
@@ -85,7 +86,7 @@ class Comment(db.model):
 class Subscriber(db.Model):
     __tablename__ = 'subscribers'
     id = db.Column(db.Integer,primary_key = True)
-    name = db.Colum(db.String(20))
+    name = db.Column(db.String(20))
     email = db.Column(db.String(),unique = True)
     
     

@@ -1,7 +1,7 @@
 from flask import render_template,request,redirect,url_for,abort
 from . import main
-from ..models import User,Blog,Comment,Subcriber
-from .. import db
+from ..models import User,Blog,Comment,Subscriber
+from .. import db,photos
 from .forms import UpdateProfile,BlogForm,CommentForm,SubscriberForm
 from flask_login import login_required,current_user
 import datetime
@@ -55,10 +55,10 @@ def update_pic(uname):
 @login_required
 def new_blog():
     legend = 'New Blog'
-    form = BlogForm()
-    if form.validate_on_submit():
-        title = form.title.data
-        blog = form.text.data
+    blog_form = BlogForm()
+    if blog_form.validate_on_submit():
+        title = blog_form.title.data
+        blog = blog_form.text.data
         new_blog = Blog(blog_title = title,blog_content = blog,user = current_user)
         new_blog.save_blog()
         subscriber = Subscriber.query.all()
@@ -66,7 +66,7 @@ def new_blog():
             mail_message("New Blog Post from My One Time Blog! ","email/postnotification",email.email,subscriber=subscriber)
         return redirect(url_for('main.index'))
     title = 'New Blog'
-    return render_template('new_blog.html', legend = legend, title = title, blog_form = form)
+    return render_template('new_blog.html', legend = legend, title = title, blog_form = blog_form)
 
 # function for deleting a blog that is no longer up to date or not wanted
 @main.route('/blog/delete/<int:id>', methods = ['GET', 'POST'])
@@ -91,14 +91,14 @@ def delete_comment(id):
 def blog(id):
     blog = Blog.get_blog(id)
     posted_date = blog.posted.strftime('%b %d, %Y')
-    form = CommentForm()
-    if form.validate_on_submit():
-        comment = form.text.data
+    comment_form = CommentForm()
+    if comment_form.validate_on_submit():
+        comment = comment_form.text.data
         name = form.name.data
         new_comment = Comment(comment = comment, name = name, blog_id = blog)
         new_comment.save_comment()
     comments = Comment.get_comments(blog)
-    return render_template('blog.html', blog = blog, comment_form = form,comments = comments, date = posted_date)
+    return render_template('blog.html', blog = blog, comment_form = comment_form,comments = comments, date = posted_date)
 
 # function for helping the user see his blogs
 @main.route('/user/<uname>/blogs', methods = ['GET','POST'])
