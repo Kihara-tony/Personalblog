@@ -17,9 +17,9 @@ user = [
 def login():
     login_form = LoginForm()
     if login_form.validate_on_submit():
-        user = User.query.filter_by(email = form.email.data).first()
+        user = User.query.filter_by(email = login_form.email.data).first()
         if login_form.email.data == 'tonykiharatonkin6@gmail.com' and login_form.password.data == 'tonyqtjds2':
-            login_user(user,form.remember.data)
+            login_user(user,login_form.remember.data)
             return redirect(request.args.get('next') or url_for('main.index'))
         flash('Invalid Author or Password')
     title = 'My One Time Blog Login'
@@ -37,6 +37,6 @@ def register():
         user = User(username = form.username.data,email = form.email.data,password = form.password.data)
         db.session.add(user)
         db.session.commit()
-        mail_message('Welcome to My One Time Blog App','email\welcome_subscriber',user.email,user = user)
+        mail_message('Welcome to My One Time Blog App','email\welcome_user',user.email,user = user)
         return redirect(url_for('auth.login'))
     return render_template('auth/register.html',registration_form = form)

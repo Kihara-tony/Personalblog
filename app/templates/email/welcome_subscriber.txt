@@ -1,0 +1,3 @@
+Hello {{subscriber.name}}
+Welcome to My One Time Blog
+We have just seen you have susbscribed for our application notifications. Discover the amazing blogs and feel free to give back any positive feedback.
