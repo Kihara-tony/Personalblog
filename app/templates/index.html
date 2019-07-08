@@ -1,5 +1,10 @@
+{% extends 'base.html' %}
+{%block styles%}
+    {{ super() }}
+    <link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}">
+{%endblock%}
 {%block content%}
-<div class="jumbotron">
+<div class="jumbotron text-center" style="background-image:url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8GraJ6q8U4p7RwD4uzP_V8E8HT9CytvdLLqmO06Frqt-WB_0WPQ");padding-bottom:30px;">
     <h1>All Time Blog</h1>
 </div>
 {%endblock%}

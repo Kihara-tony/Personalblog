@@ -6,7 +6,7 @@ from wtforms.validators import Required,Email,EqualTo
 
 class RegistrationForm(FlaskForm):
     email = StringField('Your Email Address',validators = [Required(),Email()])
-    username = StringField('username',validators = [Required(),Email()])
+    username = StringField('username',validators = [Required()])
     password = PasswordField('Password',validators = [Required(),EqualTo('password_confirm',message = 'Passwordsmust match!')])
     password_confirm =PasswordField('Confirm Password',validators = [Required()])
     submit = SubmitField('Sign Up')
@@ -14,10 +14,10 @@ class RegistrationForm(FlaskForm):
     
     def validate_email(self,data_field):
         if User.query.filter_by(email = data_field.data).first():
-            raise VallidationError('An Account With That Email Already Exipython3.6 manage.py db migrate -m "Initial Migration"sts')
+            raise ValidationError('An Account With That Email alredy exists')
     def validate_username(self,data_field):
-        if User.query.filter_by(Username = data_field.data).first():
-            raise ValidationError('Tht username is already taken')
+        if User.query.filter_by(username = data_field.data).first():
+            raise ValidationError('That username is already taken')
 
 class LoginForm(FlaskForm):
     email = StringField('Your Email Address',validators = [Required(),Email()])

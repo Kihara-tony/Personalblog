@@ -6,12 +6,12 @@ from .forms import LoginForm,RegistrationForm
 from .. import db  
 from ..email import mail_message
 
-# user = [
-#     {
-#         'email':'tonykiharatonkin6@gmail.com'
-#         'password':'tonyqtjds2'
-#     }
-# ]
+user = [
+    {
+        'email':'tonykiharatonkin6@gmail.com',
+        'password':'tonyqtjds2'
+    }
+]
 
 @auth.route('/login',methods = ['GET','POST'])
 def login():
@@ -37,6 +37,6 @@ def register():
         user = User(username = form.username.data,email = form.email.data,password = form.password.data)
         db.session.add(user)
         db.session.commit()
-        mail_message('Welcome to My One Time Blog App','email\welcome_user',user.email,user = user)
+        mail_message('Welcome to My One Time Blog App','email\welcome_subscriber',user.email,user = user)
         return redirect(url_for('auth.login'))
     return render_template('auth/register.html',registration_form = form)

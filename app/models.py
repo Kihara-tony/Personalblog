@@ -65,7 +65,7 @@ class Comment(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     comment = db.column(db.String(1000))
     name = db.Column(db.String)
-    blog = db.Column(db.Integer,db.ForeignKey('blogs'))
+    blog = db.Column(db.Integer,db.ForeignKey('blogs.id'))
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
     
     def save_comment(self):

@@ -23,6 +23,7 @@
               <li><a style="color: #fca3b7;" onmouseover="this.style.color='#000'" onmouseout="this.style.color='#fca3b7'" href="{{url_for('auth.logout')}}">Logout</a></li>
               {% else %}
               <li><a style="color: #fca3b7;" onmouseover="this.style.color='#000'" onmouseout="this.style.color='#fca3b7'"  href="{{url_for('main.subscriber')}}">Subscribe to the mailing list</a></li>
+              <li><a href="{{url_for('auth.login')}}">Sign in</a></li>
             </ul>
             {% endif %}
           </div>
