@@ -44,7 +44,7 @@ class Role(db.Model):
 class Blog(db.Model):
     __tablename__ = 'blogs'
     id = db.Column(db.Integer,primary_key = True)
-    blog_title = db.column(db.String)
+    blog_title = db.Column(db.String)
     blog_content = db.Column(db.String(1000))
     posted = db.Column(db.DateTime,default = datetime.utcnow)
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
@@ -63,7 +63,7 @@ class Blog(db.Model):
 class Comment(db.Model):
     __tablename__ = 'comments'
     id = db.Column(db.Integer,primary_key = True)
-    comment = db.column(db.String(1000))
+    comment = db.Column(db.String(1000))
     name = db.Column(db.String)
     blog = db.Column(db.Integer,db.ForeignKey('blogs.id'))
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))

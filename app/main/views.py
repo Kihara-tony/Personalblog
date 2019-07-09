@@ -64,7 +64,7 @@ def new_blog():
         subscriber = Subscriber.query.all()
         for email in subscriber:
             mail_message("New Blog Post from My One Time Blog! ","email/postnotification",email.email,subscriber=subscriber)
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.blog'))
     title = 'New Blog'
     return render_template('new_blog.html', legend = legend, title = title, blog_form = blog_form)
 
@@ -75,7 +75,7 @@ def delete_blog(id):
     blog = Blog.get_blog(id)
     db.session.delete(blog)
     db.session.commit()
-    return render_template('blogs.html', id=id, blog = blog)
+    return render_template('blog.html', id=id, blog = blog)
 
 # function to delete a comment
 @main.route('/blog/comment/delete/<int:id>', methods = ['GET', 'POST'])
@@ -105,11 +105,11 @@ def blog(id):
 def user_blogs(uname):
     user = User.query.filter_by(username = uname).first()
     blogs = Blog.query.filter_by(user_id = user.id).all()
-    return render_template('profile/blogs.html', user = user, blogs = blogs)
+    return render_template('profile/blog.html', user = user, blogs = blogs)
 @main.route('/blogs/recent', methods = ['GET','POST'])
 def blogs():
     blogs = Blog.query.order_by(Blog.id.desc()).limit(5)
-    return render_template('blogs.html',blogs = blogs)
+    return render_template('blog.html',blogs = blogs)
 
 # function for subscribing in the daily update of a new blog
 @main.route('/subscribe', methods=['GET','POST'])
@@ -122,7 +122,7 @@ def subscriber():
         db.session.commit()
         mail_message("Welcome to My One Time Blog","email/welcome_subscriber",subscriber.email,subscriber=subscriber)
         title= "My One Time Blog"
-        return render_template('index.html',title=title, blogs=blogs)
+        return render_template('blogs.html',title=title, blogs=blogs)
     subscriber = Blog.query.all()
     blogs = Blog.query.all()
     return render_template('subscribe.html',subscriber=subscriber,subscriber_form=subscriber_form,blog=blog)

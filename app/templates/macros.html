@@ -1,15 +1,13 @@
 {% macro displayBlogs(blogs_list)%}
    {%for blog in blogs_list%}
-    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4;border-radius: 5px;padding:10px; font-size:10px;margin:13px;">
-        <div style="border: 1px solid rgb(148, 141, 138);">
+    <div class="row" style="padding-bottom: 10px;">
+        <div style="border: 1px solid rgb(148, 141, 138);padding: 10px;border-radius: 5px;box-shadow: 2px 3px green;background-color: pink;text-align: center;">
             <h4>{{blog.blog_title}}</h4>
             <p>{{blog.blog_content | truncate(100)}}</p>
             <p>Written by: {{blog.user.username}}</p>
         </div>
     </div> 
     {%endfor%}
-{%endmacro%}
-{%macro displayComments(comments_list)%}
     {%for comment in comment_list%}
        <div class="col-md-6">
            <h5>{{comment.name}}</h5>
@@ -35,4 +33,4 @@
             </div>
           </div>
           {%endfor%}
-    {%endmacro%}
+{%endmacro%}
