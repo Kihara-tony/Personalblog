@@ -11,7 +11,7 @@
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li><a href="{{url_for('main.blogs')}}" style="color: orange;" onmouseover="this.style.color='#000'" onmouseout="this.style.color='green'">Recent Posts</a></li>
+        <li><a href="{{url_for('main.blogs')}}" style="color: orange;" onmouseover="this.style.color='#000'" onmouseout="this.style.color='green'">BLOGS</a></li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
@@ -22,7 +22,7 @@
         <li><a style="color:orange;" onmouseover="this.style.color='#000'" onmouseout="this.style.color='green'" href="{{url_for('auth.logout')}}">Logout</a></li>
         {% else %}
         <li><a style="color:orange;" onmouseover="this.style.color='#000'" onmouseout="this.style.color='green'"  href="{{url_for('auth.login')}}">Log in</a></li>
-        <li><a style="color: orange;" onmouseover="this.style.color='#000'" onmouseout="this.style.color='green'"  href="{{url_for('main.subscriber')}}">Subscribe to the mailing list</a></li>
+        <li><a style="color: orange;" onmouseover="this.style.color='#000'" onmouseout="this.style.color='green'"  href="{{url_for('main.subscriber')}}">Subscribe</a></li>
       </ul>
       {% endif %}
     </div>

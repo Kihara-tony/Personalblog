@@ -75,7 +75,7 @@ def delete_blog(id):
     blog = Blog.get_blog(id)
     db.session.delete(blog)
     db.session.commit()
-    return render_template('blog.html', id=id, blog = blog)
+    return render_template('blogs.html', id=id, blog = blog)
 
 # function to delete a comment
 @main.route('/blog/comment/delete/<int:id>', methods = ['GET', 'POST'])
@@ -84,7 +84,7 @@ def delete_comment(id):
     comment = Comment.query.filter_by(id=id).first()
     blog_id = comment.blog
     Comment.delete_comment(id)
-    return redirect(url_for('main.blog',id=blog_id))
+    return redirect(url_for('main.blogs',id=blog_id))
 
 # function to save the comments of a blog
 @main.route('/blog/<int:id>', methods = ["GET","POST"])
@@ -98,19 +98,23 @@ def blog(id):
         new_comment = Comment(comment = comment, name = name, blog_id = blog)
         new_comment.save_comment()
     comments = Comment.get_comments(blog)
-    return render_template('blog.html', blog = blog, comment_form = comment_form,comments = comments, date = posted_date)
+    return render_template('blogs.html', blog = blog, comment_form = comment_form,comments = comments, date = posted_date)
 
 # function for helping the user see his blogs
 @main.route('/user/<uname>/blogs', methods = ['GET','POST'])
+@login_required
 def user_blogs(uname):
     user = User.query.filter_by(username = uname).first()
     blogs = Blog.query.filter_by(user_id = user.id).all()
-    return render_template('profile/blog.html', user = user, blogs = blogs)
+    return render_template('profile/blogs.html', user = user, blogs = blogs)
 @main.route('/blogs/recent', methods = ['GET','POST'])
 def blogs():
     blogs = Blog.query.order_by(Blog.id.desc()).limit(5)
-    return render_template('blog.html',blogs = blogs)
-
+    return render_template('blogs.html',blogs = blogs)
+@main.route('/comments/recent',methods = ['GET','POST'])
+def comments():
+    comments= Comment.query.order_by(Blog.id.desc()).limit(5)
+    return render_template("blogs.html",blogs = blogs)
 # function for subscribing in the daily update of a new blog
 @main.route('/subscribe', methods=['GET','POST'])
 def subscriber():
@@ -122,7 +126,7 @@ def subscriber():
         db.session.commit()
         mail_message("Welcome to My One Time Blog","email/welcome_subscriber",subscriber.email,subscriber=subscriber)
         title= "My One Time Blog"
-        return render_template('blogs.html',title=title, blogs=blogs)
+        return render_template('index.html',title=title, blogs=blogs)
     subscriber = Blog.query.all()
     blogs = Blog.query.all()
     return render_template('subscribe.html',subscriber=subscriber,subscriber_form=subscriber_form,blog=blog)
@@ -138,7 +142,7 @@ def update_blog(id):
         blog.blog_title = form.title.data
         blog.blog_content = form.text.data
         db.session.commit()
-        return redirect(url_for('main.blog', id = id))
+        return redirect(url_for('main.blogs', id = id))
     elif request.method == 'GET':
         form.title.data = blog.blog_title
         form.text.data = blog.blog_content

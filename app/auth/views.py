@@ -20,14 +20,14 @@ def login():
         user = User.query.filter_by(email = login_form.email.data).first()
         if login_form.email.data == 'tonykiharatonkin6@gmail.com' and login_form.password.data == 'tonyqtjds2':
             login_user(user,login_form.remember.data)
-            return redirect(request.args.get('next') or url_for('main.index'))
+            return redirect(request.args.get('next') or url_for('main.blogs'))
         flash('Invalid Author or Password')
     title = 'My One Time Blog Login'
     return render_template('auth/login.html',title = title,login_form = login_form)
 @auth.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('main.index'))
+    return redirect(url_for('main.blogs'))
 
 
 @auth.route('/register',methods = ['GET','POST'])
