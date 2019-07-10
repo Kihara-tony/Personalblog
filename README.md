@@ -18,22 +18,22 @@
  |Subscribe|When you click on the subscribe button and input the details|Then you are able to receive an email to show you that you have subscribed|
 
 # SETUP
- To set up you are required to have:
+To set up you are required to have:
             - Python
             - Flask
             - Text editor
- Then go through the following steps:
+Then go through the following steps:
    * Clone the Repository
-        - git clone https://github.com/Kihara-tony/Personalblog.git
-    * Get into your favorite text editor
-       - code .
-    * Get into the folder
-        - cd Personalblog
- To run this program
- * run this command lines in your terminal:
- * chmod a+x start.sh`
- * ./start.sh`
- * access the application on this localhost address `http://127.0.0.1:5000`
+    - git clone https://github.com/Kihara-tony/Personalblog.git
+   * Get into your favorite text editor
+    - code .
+   * Get into the folder
+    - cd Personalblog
+To run this program
+* run this command lines in your terminal:
+* chmod a+x start.sh`
+* ./start.sh`
+* access the application on this localhost address http://127.0.0.1:5000`
 
 -------------------------------
 # TECHNOLOGIES USED :satellite:
