@@ -8,6 +8,7 @@
 # DESCRIPTION :notebook:
 
  This app mainly is about posting blogs and letting people see it and if people like your blog they can comment.If you are not in need of the blog ypou can delete and input a new one.
+ 
  ---------------------
 # BDD
 
@@ -30,16 +31,17 @@
         - cd Personalblog
  To run this program
  * run this command lines in your terminal:
- * `chmod a+x start.sh`
- * `./start.sh`
+ * chmod a+x start.sh`
+ * ./start.sh`
  * access the application on this localhost address `http://127.0.0.1:5000`
 
 -------------------------------
 # TECHNOLOGIES USED :satellite:
 
- Python
- Flask
- Database
+ -Python
+ -Flask
+ -Database
+ 
 ----------------------------
 # SUPPORT
 
